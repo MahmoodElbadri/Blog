@@ -1,4 +1,4 @@
-﻿@model Tag
+﻿@model TagAddRequest
 @{
     ViewData["Title"] = "Add";
 }
@@ -10,18 +10,19 @@
 </div>
 
 <div class="container py-5">
-    <form>
-        <fieldset>
-            <legend>Legend</legend>
-            <div>
-                <label for="@Model.Name" class="form-label mt-4"></label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
-                @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
-            </div>
-            <div>
-                <label for="@Model.DisplayName" class="form-label mt-4"></label>
-                <input type="text" class="form-control" id="displayName" placeholder="Enter Deisplay Name" autocomplete="on">
-            </div>
-        </fieldset>
+    <form asp-action="Add" method="post">
+        <div>
+            <label asp-for="Name" class="form-label mt-4"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter Name"/>
+        </div>
+        <div>
+            <label asp-for="DisplayName" class="form-label mt-4"></label>
+            <input asp-for="DisplayName" class="form-control" placeholder="Enter Display Name"/>
+        </div>
+        <div class="mt-2 d-flex gap-2">
+            <button type="submit" class="btn btn-success flex-fill">Save</button>
+            <a class="btn btn-danger flex-fill" asp-action="Add">Cancel</a>
+        </div>        
     </form>
+
 </div>
