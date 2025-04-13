@@ -24,7 +24,7 @@ public class AdminTagsController : Controller
     {
         var tag = new Tag
         {
-            Name = tagAddRequest.Name,,
+            Name = tagAddRequest.Name,
             DisplayName = tagAddRequest.DisplayName,
         };
         _dbContext.Tags.Add(tag);
