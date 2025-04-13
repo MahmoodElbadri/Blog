@@ -1,0 +1,27 @@
+﻿@model Tag
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Add New Tag - Admin Functionality</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    <form>
+        <fieldset>
+            <legend>Legend</legend>
+            <div>
+                <label for="@Model.Name" class="form-label mt-4"></label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
+                @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
+            </div>
+            <div>
+                <label for="@Model.DisplayName" class="form-label mt-4"></label>
+                <input type="text" class="form-control" id="displayName" placeholder="Enter Deisplay Name" autocomplete="on">
+            </div>
+        </fieldset>
+    </form>
+</div>
