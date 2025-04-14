@@ -31,7 +31,7 @@
                                 <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="AdminTags">Add Tag</a></li>
                                 <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="AdminTags">Tags</a></li>
                                 <li><hr class="text-dark dropdown-divider"></li>
-                                <li><a class="text-dark dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="Posts">Add Post</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -45,11 +45,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Blog.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+    <footer class="bg-light text-center text-lg-start border-top mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted text-center">© @DateTime.Now.Year Made with ❤️ and Mahmood Elbadri</span>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
