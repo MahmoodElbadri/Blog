@@ -56,4 +56,60 @@ public class AdminTagsController : Controller
         }
         return View();
     }
+
+    [HttpPost]
+    public IActionResult Edit(TagEditRequest tagEditRequest)
+    {
+        if (tagEditRequest == null)
+        {
+            return View();
+        }
+        var tag = new Tag
+        {
+            ID = tagEditRequest.ID,
+            Name = tagEditRequest.Name,
+            DisplayName = tagEditRequest.DisplayName,
+        };
+
+        var existTag = _dbContext.Tags.Find(tagEditRequest.ID);
+        if (existTag != null)
+        {
+            existTag.Name = tagEditRequest.Name;
+            existTag.DisplayName = tagEditRequest.DisplayName;
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        return View("Edit", new { tagEditRequest.ID });
+    }
+
+    [HttpGet]
+    public IActionResult Delete(Guid id)
+    {
+        var tag = _dbContext.Tags.FirstOrDefault(tmp => tmp.ID == id);
+        if (tag == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        var tagEditRequest = new TagEditRequest
+        {
+            Name = tag.Name,
+            DisplayName = tag.DisplayName,
+            ID = id
+        };
+
+        return View(tagEditRequest);
+    }
+
+    [HttpPost]
+    [ActionName("Delete")]
+    public IActionResult DeleteConfirmed(Guid id)
+    {
+        var tag = _dbContext.Tags.FirstOrDefault(tmp => tmp.ID == id);
+        if ((tag != null))
+        {
+            _dbContext.Tags.Remove(tag);
+            _dbContext.SaveChanges();
+        }
+        return RedirectToAction(nameof(Index));
+    }
 }
