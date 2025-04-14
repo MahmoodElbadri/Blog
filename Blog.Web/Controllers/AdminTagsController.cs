@@ -13,6 +13,7 @@ public class AdminTagsController : Controller
     {
         this._dbContext = dbContext;
     }
+
     [HttpGet]
     public IActionResult Add()
     {
@@ -29,6 +30,13 @@ public class AdminTagsController : Controller
         };
         _dbContext.Tags.Add(tag);
         _dbContext.SaveChanges();
-        return View();
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var tags = _dbContext.Tags.ToList();
+        return View(tags);
     }
 }

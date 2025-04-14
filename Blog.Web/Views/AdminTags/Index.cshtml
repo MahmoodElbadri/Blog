@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Tag>
+
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1> Tags</h1>
+    </div>
+</div>
+
+@if (Model is not null && Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Tag ID</th>
+                <th scope="col">Tag Name</th>
+                <th scope="col">Tag Display Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tag in Model)
+            {
+                <tr class="table-default">
+
+                    <td scope="row">@tag.ID</td>
+                    <td>@tag.Name</td>
+                    <td>@tag.DisplayName</td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <strong> No Tags Found</strong>
+}
