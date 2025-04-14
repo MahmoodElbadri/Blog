@@ -39,4 +39,21 @@ public class AdminTagsController : Controller
         var tags = _dbContext.Tags.ToList();
         return View(tags);
     }
+
+    [HttpGet]
+    public IActionResult Edit(Guid id)
+    {
+        var tag = _dbContext.Tags.FirstOrDefault(tmp => tmp.ID == id);
+        if (tag != null)
+        {
+            var tagEditRequest = new TagEditRequest
+            {
+                ID = id,
+                Name = tag.Name,
+                DisplayName = tag.DisplayName,
+            };
+            return View(tagEditRequest);
+        }
+        return View();
+    }
 }

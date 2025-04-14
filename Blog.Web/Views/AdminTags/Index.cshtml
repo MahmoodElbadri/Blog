@@ -30,7 +30,7 @@
                     <td>@tag.Name</td>
                     <td>@tag.DisplayName</td>
                     <td>
-                        <a asp-action="Edit" class="btn btn-warning">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@tag.ID" class="btn btn-warning">Edit</a>
                     </td>
                 </tr>
             }
