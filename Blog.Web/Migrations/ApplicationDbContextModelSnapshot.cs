@@ -64,7 +64,7 @@ namespace Blog.Web.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Web.Models.Domain.Tag", b =>
@@ -83,7 +83,7 @@ namespace Blog.Web.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("BlogPostTag", b =>
@@ -98,7 +98,7 @@ namespace Blog.Web.Migrations
 
                     b.HasIndex("TagsID");
 
-                    b.ToTable("BlogPostTag");
+                    b.ToTable("BlogPostTag", (string)null);
                 });
 
             modelBuilder.Entity("BlogPostTag", b =>

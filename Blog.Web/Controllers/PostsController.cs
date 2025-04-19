@@ -17,9 +17,10 @@ namespace Blog.Web.Controllers
             this._tagRepository = tagRepository;
             this._postRepository = postRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var posts = await _postRepository.GetAllAsync();
+            return View(posts);
         }
 
         [HttpGet]
@@ -47,7 +48,7 @@ namespace Blog.Web.Controllers
                 FeaturedImageUrl = request.FeaturedImageUrl,
                 Header = request.Header,
                 IsVisible = request.IsVisible,
-                PageTitle = request.PageTitle,
+                PageTitle = request.PostTitle,
                 PublishedDate = request.PublishedDate,
                 ShortDescription = request.ShortDescription,
                 UrlHandle = request.UrlHandle,

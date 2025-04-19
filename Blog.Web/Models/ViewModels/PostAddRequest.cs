@@ -10,7 +10,7 @@ public class PostAddRequest
     public string? Header { get; set; }
     [Required]
     [Display(Name = "Post Title")]
-    public string? PageTitle { get; set; }
+    public string? PostTitle { get; set; }
     [Required]
     [Display(Name = "Post Content")]
     public string? Content { get; set; }
