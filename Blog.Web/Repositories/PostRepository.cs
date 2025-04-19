@@ -26,7 +26,7 @@ public class PostRepository : IPostRepository
 
     public async Task<IEnumerable<BlogPost>> GetAllAsync()
     {
-        return await _dbContext.Posts.ToListAsync();
+        return await _dbContext.Posts.Include(tmp => tmp.Tags).ToListAsync();
     }
 
     public Task<BlogPost?> GetAsync(Guid id)
