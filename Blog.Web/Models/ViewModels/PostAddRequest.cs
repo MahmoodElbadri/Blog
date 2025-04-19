@@ -14,5 +14,5 @@ public class PostAddRequest
     public string Author { get; set; }
     public bool IsVisible { get; set; }
     public IEnumerable<SelectListItem> Tags { get; set; }
-    public string SelectedTag { get; set; }
+    public string[] SelectedTags { get; set; } = Array.Empty<string>();
 }
