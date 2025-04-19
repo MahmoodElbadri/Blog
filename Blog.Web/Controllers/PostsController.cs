@@ -27,7 +27,7 @@ namespace Blog.Web.Controllers
             {
                 Tags = tags.Select(tmp => new SelectListItem
                 {
-                    Text = tmp.DisplayName,
+                    Text = tmp.Name,
                     Value = tmp.ID.ToString(),
                 })
             };
