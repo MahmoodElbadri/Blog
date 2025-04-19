@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 var app = builder.Build();
 
