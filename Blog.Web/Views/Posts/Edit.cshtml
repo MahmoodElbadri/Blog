@@ -14,6 +14,10 @@
 {
     <form method="post" asp-action="Add">
         <div>
+            <label asp-for="ID" class="form-label mt-4"></label>
+            <input asp-for="ID" type="text" class="form-control" readonly />
+        </div>
+        <div>
             <label asp-for="Header" class="form-label mt-4"></label>
             <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" />
         </div>
