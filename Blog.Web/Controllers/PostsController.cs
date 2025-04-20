@@ -103,7 +103,32 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PostEditRequest request)
         {
-
+            var post = new BlogPost
+            {
+                ID = request.ID,
+                Author = request.Author,
+                Content = request.Content,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                Header = request.Header,
+                IsVisible = request.IsVisible,
+                PostTitle = request.PostTitle,
+                PublishedDate = request.PublishedDate,
+                ShortDescription = request.ShortDescription,
+                UrlHandle = request.UrlHandle,
+            };
+            var selectedTags = new List<Tag>();
+            foreach (var tag in request.Tags)
+            {
+                Guid guid = Guid.Parse(tag.Value);
+                var existingTag = await _tagRepository.GetByIdAsync(guid);
+                if (existingTag != null)
+                {
+                    selectedTags.Add(existingTag);
+                }
+            }
+            post.Tags = selectedTags;
+            await _postRepository.UpdateAsync(post);
+            return RedirectToAction("Edit", new { id = post.ID });
         }
     }
 }
