@@ -93,6 +93,7 @@ namespace Blog.Web.Controllers
                     Text = tmp.Name,
                     Value = tmp.ID.ToString(),
                 });
+                postEditRequest.SelectedTags = post.Tags.Select(tmp => tmp.ID.ToString()).ToArray();
                 return View(postEditRequest);
             }
             return RedirectToAction("Index");
