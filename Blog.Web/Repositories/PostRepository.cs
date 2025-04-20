@@ -19,9 +19,16 @@ public class PostRepository : IPostRepository
         return post;
     }
 
-    public Task<BlogPost?> DeleteAsync(Guid id)
+    public async Task<BlogPost?> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var post = await GetAsync(id);
+        if (post != null)
+        {
+            _dbContext.Posts.Remove(post);
+            await _dbContext.SaveChangesAsync();
+            return post;
+        }
+        return null;
     }
 
     public async Task<IEnumerable<BlogPost>> GetAllAsync()
