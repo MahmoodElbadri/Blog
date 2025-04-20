@@ -67,7 +67,7 @@ namespace Blog.Web.Controllers
             post.Tags = selectedTags;
 
             await _postRepository.AddAsync(post);
-            return RedirectToAction("Add");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
