@@ -1,6 +1,7 @@
 ﻿using Blog.Web.Models.Domain;
 using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
@@ -97,6 +98,12 @@ namespace Blog.Web.Controllers
                 return View(postEditRequest);
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostEditRequest request)
+        {
+
         }
     }
 }
