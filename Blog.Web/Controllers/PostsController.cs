@@ -127,7 +127,11 @@ namespace Blog.Web.Controllers
                 }
             }
             post.Tags = selectedTags;
-            await _postRepository.UpdateAsync(post);
+            var updatedPost = await _postRepository.UpdateAsync(post);
+            if (updatedPost != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction("Edit", new { id = post.ID });
         }
     }

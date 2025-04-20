@@ -39,6 +39,7 @@ public class PostRepository : IPostRepository
         var existedPost = _dbContext.Posts.Include(tmp => tmp.Tags).FirstOrDefault(tmp => tmp.ID == post.ID);
         if (existedPost != null)
         {
+            existedPost.Header = post.Header;
             existedPost.PostTitle = post.PostTitle;
             existedPost.Content = post.Content;
             existedPost.IsVisible = post.IsVisible;
