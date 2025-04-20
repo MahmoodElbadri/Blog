@@ -10,67 +10,74 @@
     </div>
 </div>
 
-<form method="post" asp-action="Add">
-    <div>
-        <label asp-for="Header" class="form-label mt-4"></label>
-        <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" />
-    </div>
-    <div>
-        <label asp-for="PostTitle" class="form-label mt-4"></label>
-        <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" />
-    </div>
-    <div>
-        <label asp-for="Content" class="form-label mt-4"></label>
-        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
-    </div>
-    <div>
-        <label asp-for="ShortDescription" class="form-label mt-4"></label>
-        <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" />
-    </div>
-    <div>
-        <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
-        <input asp-for="FeaturedImageUrl" type="text" class="form-control" placeholder="Enter Feature Image URL" />
-    </div>
-    <div>
-        <label asp-for="UrlHandle" class="form-label mt-4"></label>
-        <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" />
-    </div>
-    <div>
-        <label asp-for="PublishedDate" class="form-label mt-4"></label>
-        <input asp-for="PublishedDate" class="form-control" placeholder="Enter Header" />
-    </div>
-    <div>
-        <label asp-for="Author" class="form-label mt-4"></label>
-        <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" />
-    </div>
-    <fieldset>
-        <div class="form-check mt-3">
-            <input class="form-check-input grey" type="checkbox" id="visible" value="true" asp-for="IsVisible">
-            <label class="form-check-label" asp-for="IsVisible">                            </label>
+@if (Model is not null)
+{
+    <form method="post" asp-action="Add">
+        <div>
+            <label asp-for="Header" class="form-label mt-4"></label>
+            <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" />
         </div>
-        @* <div>
+        <div>
+            <label asp-for="PostTitle" class="form-label mt-4"></label>
+            <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" />
+        </div>
+        <div>
+            <label asp-for="Content" class="form-label mt-4"></label>
+            <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+        </div>
+        <div>
+            <label asp-for="ShortDescription" class="form-label mt-4"></label>
+            <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" />
+        </div>
+        <div>
+            <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
+            <input asp-for="FeaturedImageUrl" type="text" class="form-control" placeholder="Enter Feature Image URL" />
+        </div>
+        <div>
+            <label asp-for="UrlHandle" class="form-label mt-4"></label>
+            <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" />
+        </div>
+        <div>
+            <label asp-for="PublishedDate" class="form-label mt-4"></label>
+            <input asp-for="PublishedDate" class="form-control" placeholder="Enter Header" />
+        </div>
+        <div>
+            <label asp-for="Author" class="form-label mt-4"></label>
+            <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" />
+        </div>
+        <fieldset>
+            <div class="form-check mt-3">
+                <input class="form-check-input grey" type="checkbox" id="visible" value="true" asp-for="IsVisible">
+                <label class="form-check-label" asp-for="IsVisible">                            </label>
+            </div>
+            @* <div>
             <label asp-for="SelectedTag" class="form-label mt-4"></label>
             <select class="form-select" asp-for="SelectedTag" asp-items="@Model.Tags" multiple>
                 <option class="text-center" disabled>--Select Tag--</option>
             </select>
         </div> *@
-        <div>
-            <label asp-for="SelectedTags" class="form-label mt-4">Select Tags</label>
-            <select asp-for="SelectedTags"
-                    asp-items="@Model.Tags"
-                    multiple
-                    placeholder="-- Select Tags --"
-                    class="form-select"
-                    id="tagDropdown">
-            </select>
-        </div>
+            <div>
+                <label asp-for="SelectedTags" class="form-label mt-4">Select Tags</label>
+                <select asp-for="SelectedTags"
+                asp-items="@Model.Tags"
+                multiple
+                placeholder="-- Select Tags --"
+                class="form-select"
+                id="tagDropdown">
+                </select>
+            </div>
 
-        <div class="mt-3 d-flex gap-2">
-            <button type="submit" class="btn btn-success flex-fill">Save</button>
-            <a class="btn btn-danger flex-fill" asp-action="Add">Cancel</a>
-        </div>
-    </fieldset>
-</form>
+            <div class="mt-3 d-flex gap-2">
+                <button type="submit" class="btn btn-success flex-fill">Save</button>
+                <a class="btn btn-danger flex-fill" asp-action="Add">Cancel</a>
+            </div>
+        </fieldset>
+    </form>
+}
+else
+{
+<strong>Post not found</strong>
+}
 
 @section Scripts {
     <script>
