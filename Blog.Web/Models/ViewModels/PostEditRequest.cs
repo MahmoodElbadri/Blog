@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Blog.Web.Models.Domain;
+namespace Blog.Web.Models.ViewModels;
 
-public class BlogPost
+public class PostEditRequest
 {
     public Guid ID { get; set; }
     public string Header { get; set; }
-    [Column("PageTitle")]
     public string PostTitle { get; set; }
     public string Content { get; set; }
     public string ShortDescription { get; set; }
@@ -15,5 +14,6 @@ public class BlogPost
     public DateTime PublishedDate { get; set; }
     public string Author { get; set; }
     public bool IsVisible { get; set; }
-    public ICollection<Tag> Tags { get; set; }
+    public IEnumerable<SelectListItem> Tags { get; set; } = Enumerable.Empty<SelectListItem>();
+    public string[] SelectedTags { get; set; } = Array.Empty<string>();
 }

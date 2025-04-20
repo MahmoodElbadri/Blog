@@ -1,10 +1,15 @@
-﻿<div class="container py-5">
+﻿@model IEnumerable<BlogPost>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container py-5">
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Header</th>
                 <th scope="col">Tags</th> <!-- New column -->
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +32,12 @@
                         {
                             <span class="text-muted">No Tags</span>
                         }
+                    </td>
+                    <td>
+                        <div class="btn-group flex-row">
+                            <a asp-action="Edit" asp-controller="Posts" asp-route-id="@post.ID" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@post.ID" class="btn btn-danger">Delete</a>
+                        </div>
                     </td>
                 </tr>
             }

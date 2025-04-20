@@ -29,9 +29,9 @@ public class PostRepository : IPostRepository
         return await _dbContext.Posts.Include(tmp => tmp.Tags).ToListAsync();
     }
 
-    public Task<BlogPost?> GetAsync(Guid id)
+    public async Task<BlogPost?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Posts.Include(tmp => tmp.Tags).FirstOrDefaultAsync(tmp => tmp.ID == id);
     }
 
     public Task<BlogPost?> UpdateAsync(BlogPost post)

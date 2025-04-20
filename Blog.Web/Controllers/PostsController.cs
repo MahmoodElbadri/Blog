@@ -48,7 +48,7 @@ namespace Blog.Web.Controllers
                 FeaturedImageUrl = request.FeaturedImageUrl,
                 Header = request.Header,
                 IsVisible = request.IsVisible,
-                PageTitle = request.PostTitle,
+                PostTitle = request.PostTitle,
                 PublishedDate = request.PublishedDate,
                 ShortDescription = request.ShortDescription,
                 UrlHandle = request.UrlHandle,
@@ -67,6 +67,35 @@ namespace Blog.Web.Controllers
 
             await _postRepository.AddAsync(post);
             return RedirectToAction("Add");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var post = await _postRepository.GetAsync(id);
+            if (post != null)
+            {
+                var postEditRequest = new PostEditRequest
+                {
+                    ID = id,
+                    Author = post.Author,
+                    Content = post.Content,
+                    FeaturedImageUrl = post.FeaturedImageUrl,
+                    Header = post.Header,
+                    IsVisible = post.IsVisible,
+                    PostTitle = post.PostTitle,
+                    PublishedDate = post.PublishedDate,
+                    ShortDescription = post.ShortDescription,
+                    UrlHandle = post.UrlHandle,
+                };
+                postEditRequest.Tags = post.Tags.Select(tmp => new SelectListItem
+                {
+                    Text = tmp.Name,
+                    Value = tmp.ID.ToString(),
+                });
+                return View(postEditRequest);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
