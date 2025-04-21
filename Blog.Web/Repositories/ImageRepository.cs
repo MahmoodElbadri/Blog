@@ -1,5 +1,7 @@
 ﻿
 using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System.Net;
 
 namespace Blog.Web.Repositories;
 
@@ -11,12 +13,26 @@ public class ImageRepository : IImageRepository
     public ImageRepository(IConfiguration configuration)
     {
         this._configuration = configuration;
-        _account = new Account(_configuration.GetSection("CloudName")["CloudName"],
-            _configuration.GetSection("CloudName")["ApiKey"],
-            _configuration.GetSection("CloudName")["ApiSecret"]);
+        _account = new Account(_configuration.GetSection("Cloudinary")["CloudName"],
+            _configuration.GetSection("Cloudinary")["ApiKey"],
+            _configuration.GetSection("Cloudinary")["ApiSecret"]);
     }
-    public Task<string> UploadImageAsync(IFormFile image)
+    public async Task<string> UploadImageAsync(IFormFile image)
     {
-        throw new NotImplementedException();
+        var client = new Cloudinary(_account);
+        var uploadParams = new ImageUploadParams()
+        {
+            File = new FileDescription(image.FileName, image.OpenReadStream()),
+            //UseFilename = true,
+            //UniqueFilename = false,
+            //Overwrite = true
+            DisplayName = image.FileName
+        };
+        var uploadResult = await client.UploadAsync(uploadParams);
+        if (uploadResult != null && uploadResult.StatusCode == HttpStatusCode.OK)
+        {
+            return uploadResult.SecureUrl.ToString();
+        }
+        return null;
     }
 }
