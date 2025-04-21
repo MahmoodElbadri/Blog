@@ -5,136 +5,134 @@
 
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
-        <h1>Add New Plog Post - Admin Functionality</h1>
+        <h1>Add New Blog Post - Admin Functionality</h1>
     </div>
 </div>
 
-<form method="post" asp-action="Add">
-    <div>
-        <label asp-for="Header" class="form-label mt-4"></label>
-        <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" />
-    </div>
-    <div>
-        <label asp-for="PostTitle" class="form-label mt-4"></label>
-        <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" />
-    </div>
-    <div>
-        <label asp-for="Content" class="form-label mt-4"></label>
-        <textarea asp-for="Content" id="content" class="form-control" rows="3"></textarea>
-    </div>
-    <div>
-        <label asp-for="ShortDescription" class="form-label mt-4"></label>
-        <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" />
-    </div>
-    <div>
-        <label for="formFile" class="form-label mt-4">Featured Image Upload</label>
-        <input class="form-control" type="file" id="featuredImageUpload">
-    </div>
-    <div>
-        <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
-        <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" />
-        <img src="" id="featuredImagePreview" style="display: none; width: 300px" alt="Alternate Text" />
-    </div>
-    <div>
-        <label asp-for="UrlHandle" class="form-label mt-4"></label>
-        <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" />
-    </div>
-    <div>
-        <label asp-for="PublishedDate" class="form-label mt-4"></label>
-        <input asp-for="PublishedDate" class="form-control" placeholder="Enter Header" />
-    </div>
-    <div>
-        <label asp-for="Author" class="form-label mt-4"></label>
-        <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" />
-    </div>
-    <fieldset>
-        <div class="form-check mt-3">
-            <input class="form-check-input grey" type="checkbox" id="visible" value="true" asp-for="IsVisible">
-            <label class="form-check-label" asp-for="IsVisible">                            </label>
+<div class="container py-4">
+    <form method="post" asp-action="Add" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="Header" class="form-label">Header</label>
+            <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" required />
         </div>
-        @* <div>
-            <label asp-for="SelectedTag" class="form-label mt-4"></label>
-            <select class="form-select" asp-for="SelectedTag" asp-items="@Model.Tags" multiple>
-                <option class="text-center" disabled>--Select Tag--</option>
-            </select>
-        </div> *@
-        <div>
-            <label asp-for="SelectedTags" class="form-label mt-4">Select Tags</label>
-            <select asp-for="SelectedTags"
-                    asp-items="@Model.Tags"
-                    multiple
-                    placeholder="-- Select Tags --"
-                    class="form-select"
-                    id="tagDropdown">
+        <div class="mb-3">
+            <label asp-for="PostTitle" class="form-label">Post Title</label>
+            <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Content</label>
+            <textarea asp-for="Content" id="content" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ShortDescription" class="form-label">Short Description</label>
+            <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Featured Image Upload</label>
+            <input class="form-control" type="file" id="featuredImageUpload" name="featuredImageFile" accept="image/*" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="FeaturedImageUrl" class="form-label">Featured Image URL</label>
+            <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" readonly />
+            <img src="" id="featuredImagePreview" class="mt-2" style="display: none; max-width: 300px; height: auto;" alt="Featured Image Preview" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="UrlHandle" class="form-label">URL Handle</label>
+            <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="PublishedDate" class="form-label">Published Date</label>
+            <input asp-for="PublishedDate" type="datetime-local" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Author" class="form-label">Author</label>
+            <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" required />
+        </div>
+        <div class="mb-3 form-check">
+            <input class="form-check-input" type="checkbox" id="visible" asp-for="IsVisible">
+            <label class="form-check-label" asp-for="IsVisible">Make post visible</label>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SelectedTags" class="form-label">Select Tags</label>
+            <select asp-for="SelectedTags" asp-items="@Model.Tags" multiple class="form-select" id="tagDropdown">
             </select>
         </div>
 
-        <div class="mt-3 d-flex gap-2">
+        <div class="mt-4 d-flex gap-2">
             <button type="submit" class="btn btn-success flex-fill">Save</button>
-            <a class="btn btn-danger flex-fill" asp-action="Add">Cancel</a>
+            <a class="btn btn-danger flex-fill" asp-action="Index">Cancel</a>
         </div>
-    </fieldset>
-</form>
+    </form>
+</div>
 
 @section Scripts {
+    <!-- Tom Select CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <!-- Froala Editor CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet">
+
+    <!-- Tom Select JS -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <!-- Froala Editor JS -->
+    <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const select = new TomSelect('#tagDropdown', {
-                plugins: ['checkbox_options'],
+            // Initialize tag selector
+            new TomSelect('#tagDropdown', {
+                plugins: ['remove_button'],
+                create: false,
+                maxItems: 10,
+                placeholder: 'Select tags...',
+                hideSelected: true,
                 render: {
-                    option: function (data, escape) {
-                        return `
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="${escape(data.value)}">
-                                <label class="form-check-label" for="${escape(data.value)}">${escape(data.text)}</label>
-                            </div>`;
+                    option: function(data, escape) {
+                        return `<div>${escape(data.text)}</div>`;
+                    },
+                    item: function(data, escape) {
+                        return `<div class="badge bg-primary me-1">${escape(data.text)}</div>`;
                     }
-                },
-                onBlur: function () {
-                    this.close();
                 }
             });
 
-            // Optional: close dropdown on pressing Enter key
-            select.on('item_add', function () {
-                if (select.items.length > 0) {
-                    // Optional delay to wait for user to pick more
-                    setTimeout(() => select.close(), 30000);
-                }
+            // Initialize Froala Editor
+            new FroalaEditor('#content', {
+                imageUploadURL: '/api/images', // URL for image upload
+                imageUploadParams: { 'file': 'image' } // Specify the field name
             });
+
+            // Featured image upload handler
+            const featuredImageUpload = document.getElementById('featuredImageUpload');
+            const featuredImageUrl = document.getElementById('featuredImageUrl');
+            const featuredImagePreview = document.getElementById('featuredImagePreview');
+
+            async function uploadFeaturedImage(e) {
+                const file = e.target.files[0];
+                if (!file) return; // No file selected
+
+                let data = new FormData();
+                data.append('image', file);
+
+                try {
+                    const response = await fetch('/api/images', {
+                        method: "POST",
+                        body: data
+                    });
+
+                    if (!response.ok) throw new Error('Upload failed');
+
+                    const result = await response.json();
+                    // Ensure the result object contains the expected data
+                    featuredImageUrl.value = result.link?.result || result.url || "";
+                    featuredImagePreview.src = featuredImageUrl.value;
+                    featuredImagePreview.style.display = "block"; // Show image preview
+                } catch (error) {
+                    console.error("Upload error:", error);
+                    alert("Image upload failed. Please try again.");
+                }
+            }
+
+            featuredImageUpload.addEventListener('change', uploadFeaturedImage);
         });
     </script>
-
-    <script>
-        var editor = new FroalaEditor('#content');
-        const featuredImageUpload = document.getElementById('featuredImageUpload');
-        const featuredImageUrl = document.getElementById('featuredImageUrl');
-        const featuredImagePreview = document.getElementById('featuredImagePreview');
-
-        async function uploadFeaturedImage(e) {
-            console.log(e.target.files[0]);
-
-            let data = new FormData();
-            data.append('image', e.target.files[0]);
-
-            const response = await fetch('/api/images', { // 💥 Comma was missing here
-                method: "POST",
-                headers: {
-                    'Accept': '*/*',
-                },
-                body: data
-            });
-
-            const result = await response.json();
-            console.log("Result from API:", result);
-
-                featuredImageUrl.value = result.link?.result ?? "No Link retrieved";
-                featuredImagePreview.src = featuredImageUrl.value;
-                featuredImagePreview.style.display = "block";
-        }
-
-        featuredImageUpload.addEventListener('change', uploadFeaturedImage);
-    </script>
-
-
 }

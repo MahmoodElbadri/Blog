@@ -17,9 +17,9 @@ public class ImagesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> UploadAsync(IFormFile image)
+    public async Task<IActionResult> UploadAsync(IFormFile file)
     {
-        var imageUrl = _imageRepository.UploadImageAsync(image);
+        var imageUrl = await _imageRepository.UploadImageAsync(file);
         if (imageUrl == null)
         {
             return Problem("Something went wrong", null, StatusCodes.Status500InternalServerError);
