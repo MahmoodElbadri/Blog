@@ -33,6 +33,7 @@
     <div>
         <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
         <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" />
+        <img src="" id="featuredImagePreview" style="display: none; width: 300px" alt="Alternate Text" />
     </div>
     <div>
         <label asp-for="UrlHandle" class="form-label mt-4"></label>
@@ -108,6 +109,7 @@
         var editor = new FroalaEditor('#content');
         const featuredImageUpload = document.getElementById('featuredImageUpload');
         const featuredImageUrl = document.getElementById('featuredImageUrl');
+        const featuredImagePreview = document.getElementById('featuredImagePreview');
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);
@@ -127,6 +129,8 @@
             console.log("Result from API:", result);
 
                 featuredImageUrl.value = result.link?.result ?? "No Link retrieved";
+                featuredImagePreview.src = featuredImageUrl.value;
+                featuredImagePreview.style.display = "block";
         }
 
         featuredImageUpload.addEventListener('change', uploadFeaturedImage);
