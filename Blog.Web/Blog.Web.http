@@ -1,0 +1,9 @@
+﻿@Blog.Web_HostAddress = https://localhost:7098
+
+GET {{Blog.Web_HostAddress}}/api/images
+
+###
+
+GET {{Blog.Web_HostAddress}}/api/images
+
+###

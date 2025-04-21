@@ -20,7 +20,7 @@
     </div>
     <div>
         <label asp-for="Content" class="form-label mt-4"></label>
-        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+        <textarea asp-for="Content" id="content" class="form-control" rows="3"></textarea>
     </div>
     <div>
         <label asp-for="ShortDescription" class="form-label mt-4"></label>
@@ -98,5 +98,9 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        var editor = new FroalaEditor('#content');
     </script>
 }
