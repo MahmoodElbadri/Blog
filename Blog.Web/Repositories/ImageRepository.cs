@@ -13,7 +13,7 @@ public class ImageRepository : IImageRepository
     public ImageRepository(IOptions<CloudinarySettings> cloudinaryOptions)
     {
         var settings = cloudinaryOptions.Value;
-        var account = new Account(settings.CloudName, settings.ApiKey, settings.ApiSecret);
+        var account = new Account(cloud: settings.CloudName, apiKey: settings.ApiKey, apiSecret: settings.ApiSecret);
         _cloudinary = new Cloudinary(account);
     }
 
