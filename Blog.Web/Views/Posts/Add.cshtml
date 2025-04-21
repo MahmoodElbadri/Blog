@@ -32,7 +32,7 @@
     </div>
     <div>
         <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
-        <input asp-for="FeaturedImageUrl" type="text" class="form-control" placeholder="Enter Feature Image URL" />
+        <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" />
     </div>
     <div>
         <label asp-for="UrlHandle" class="form-label mt-4"></label>
@@ -107,8 +107,30 @@
     <script>
         var editor = new FroalaEditor('#content');
         const featuredImageUpload = document.getElementById('featuredImageUpload');
-        featuredImageUpload.addEventListener('change', function () {
+        const featuredImageUrl = document.getElementById('featuredImageUrl');
 
+        async function uploadFeaturedImage(e) {
+            console.log(e.target.files[0]);
+
+            let data = new FormData();
+            data.append('image', e.target.files[0]);
+
+            const response = await fetch('/api/images', { // 💥 Comma was missing here
+                method: "POST",
+                headers: {
+                    'Accept': '*/*',
+                },
+                body: data
+            });
+
+            const result = await response.json();
+            console.log("Result from API:", result);
+
+                featuredImageUrl.value = result.link?.result ?? "No Link retrieved";
         }
+
+        featuredImageUpload.addEventListener('change', uploadFeaturedImage);
     </script>
+
+
 }
