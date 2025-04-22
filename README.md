@@ -45,6 +45,3 @@ A modern Content Management System (CMS) for blog posts built using ASP.NET Core
    ```bash
    dotnet run
    ```
-
-
-ولو عايز README باللغة العربية كمان، عادي أوي 🧉
