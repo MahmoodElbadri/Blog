@@ -1,7 +1,7 @@
 
 # Blog 📝🚀
 
-A modern Content Management System (CMS) for blog posts built using ASP.NET Core 9, Entity Framework Core, and SQL Server. This project provides full CRUD operations for blog posts with rich text editing, image upload, tag management, and admin-only functionalities.
+A modern Content Management System  for blog posts built using ASP.NET Core 9, Entity Framework Core, and SQL Server. This project provides full CRUD operations for blog posts with rich text editing, image upload, tag management, and admin-only functionalities.
 
 ## 🌟 Features
 
