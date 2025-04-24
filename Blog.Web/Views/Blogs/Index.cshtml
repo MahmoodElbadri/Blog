@@ -1,0 +1,59 @@
+﻿@model BlogPost
+@{
+    ViewData["Title"] = Model?.PostTitle ?? "Blog";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (Model is not null)
+            {
+                <!-- Post Header -->
+                <div class="mb-4">
+                    <h1 class="fw-bold mb-3">@Model.PostTitle</h1>
+                    <div class="d-flex align-items-center mb-4">
+                        <div>
+                            <span class="fw-bold">@Model.Author</span>
+                            <span class="text-muted mx-2">•</span>
+                            <span class="text-muted">
+                                @{
+                                    var days = (Model.PublishedDate - DateTime.Now).Days;
+                                    @(days == 0 ? "Published today" : days == 1 ? "Published yesterday" : $"Published {Math.Abs(days)} days ago")
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Image -->
+                <img src="@Model.FeaturedImageUrl" class="img-fluid rounded mb-4" alt="@Model.PostTitle">
+
+                <!-- Post Description -->
+                <p class="lead mb-4">@Model.ShortDescription</p>
+
+                <!-- Tags -->
+                @if (Model.Tags != null && Model.Tags.Any())
+                {
+                    <div class="mb-4">
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="badge bg-primary me-2">@tag.Name</span>
+                        }
+                    </div>
+                }
+
+                <!-- Post Content -->
+                <div class="mb-5">
+                    @Html.Raw(Model.Content)
+                </div>
+            }
+            else
+            {
+                <p class="lead">Blog post not found.</p>
+            }
+            <a class="btn btn-primary col-12" asp-controller="Home" asp-action="Index">Back to Blogs</a>
+        </div>
+    </div>
+
+</div>
+

@@ -9,4 +9,5 @@ public interface IPostRepository
     Task<BlogPost> AddAsync(BlogPost post);
     Task<BlogPost?> UpdateAsync(BlogPost post);
     Task<BlogPost?> DeleteAsync(Guid id);
+    Task<BlogPost?> GetByUrlHandleAsync(string urlHandle);
 }

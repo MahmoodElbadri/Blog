@@ -41,6 +41,12 @@ public class PostRepository : IPostRepository
         return await _dbContext.Posts.Include(tmp => tmp.Tags).FirstOrDefaultAsync(tmp => tmp.ID == id);
     }
 
+    public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+    {
+        var post = await _dbContext.Posts.Include(tmp => tmp.Tags).FirstOrDefaultAsync(tmp => tmp.UrlHandle == urlHandle);
+        return (post == null) ? null : post;
+    }
+
     public async Task<BlogPost?> UpdateAsync(BlogPost post)
     {
         var existedPost = _dbContext.Posts.Include(tmp => tmp.Tags).FirstOrDefault(tmp => tmp.ID == post.ID);
