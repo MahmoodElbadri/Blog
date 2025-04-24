@@ -1,11 +1,114 @@
-﻿@{
+﻿@model IEnumerable<BlogPost>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<section class="hero bg-white text-dark text-center py-5">
+<!-- Hero Section with improved design -->
+<section class="hero bg-light text-dark py-5 mb-5 rounded shadow-sm">
     <div class="container">
-        <h1 class="display-4 fw-bold">Welcome to Badri's Blog 💻</h1>
-        <p class="lead mt-3">A blog for developers, by a developer. Dive into code, tech tips, and backend magic.</p>
-        <a asp-action="Index" asp-controller="Posts" class="btn btn-primary btn-lg mt-4">Explore Posts</a>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold">Welcome to Badri's Blog <span class="text-primary">💻</span></h1>
+                <p class="lead mt-3 text-secondary">A blog for developers, by a developer. Dive into code, tech tips, and backend magic.</p>
+                <div class="mt-4 d-flex gap-3">
+                    <a asp-action="Index" asp-controller="Posts" class="btn btn-primary btn-lg">Explore Posts</a>
+                    <a href="#featured-posts" class="btn btn-outline-secondary btn-lg">Recent Articles</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <!-- Hero image with enhanced styling -->
+                <div class="position-relative">
+                    <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         alt="Blog Image" class="img-fluid rounded shadow" style="object-fit: cover;">
+                    <div class="position-absolute bottom-0 end-0 bg-primary text-white px-3 py-2 rounded-start" style="border-bottom-right-radius: 0;">
+                        Developer Insights
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- Blog post section with improved card design -->
+<section id="featured-posts" class="py-4">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="fw-bold border-bottom pb-3">Latest Articles</h2>
+            </div>
+        </div>
+
+        @if (Model is not null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var post in Model)
+                {
+                    <div class="col-lg-6 col-xl-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm hover-shadow" style="transition: all 0.3s ease;">
+                            <div class="position-relative">
+                                <img src="@post.FeaturedImageUrl" class="card-img-top" alt="@post.PostTitle"
+                                     style="height: 200px; object-fit: cover;">
+                                <div class="position-absolute top-0 end-0 bg-white text-dark m-2 px-2 py-1 rounded small">
+                                    @post.Author
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">@post.PostTitle</h5>
+                                <p class="card-text text-secondary">@post.ShortDescription</p>
+                            </div>
+                            <div class="card-footer bg-white border-top-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        @{
+                                            var days = (post.PublishedDate - DateTime.Now).Days;
+                                            <span>
+                                                @(days == 0 ? "Published today" : days == 1 ? "Published yesterday" : $"Published {Math.Abs(days)} days ago")
+                                            </span>
+                                        }
+                                    </small>
+                                    <a asp-controller="Posts" asp-action="View" asp-route-id="@post.ID" class="btn btn-sm btn-outline-primary">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center py-5">
+                    <div class="alert alert-info p-5 shadow-sm">
+                        <h4>No posts yet!</h4>
+                        <p class="mb-0">Check back soon for new content or subscribe to our newsletter.</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="bg-light py-5 rounded shadow-sm mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h3 class="fw-bold mb-3">Stay Updated</h3>
+                <p class="text-secondary mb-4">Subscribe to get notified about new articles and tech insights.</p>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control form-control-lg" placeholder="Your email address">
+                    <button class="btn btn-primary" type="button">Subscribe</button>
+                </div>
+                <small class="text-muted">We respect your privacy. Unsubscribe at any time.</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional: Add custom CSS for hover effects -->
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+</style>
