@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlogPost>
+﻿@model HomeVM
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -19,7 +19,7 @@
                 <!-- Hero image with enhanced styling -->
                 <div class="position-relative">
                     <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                         alt="Blog Image" class="img-fluid rounded shadow" style="object-fit: cover;">
+                    alt="Blog Image" class="img-fluid rounded shadow" style="object-fit: cover;">
                     <div class="position-absolute bottom-0 end-0 bg-primary text-white px-3 py-2 rounded-start" style="border-bottom-right-radius: 0;">
                         Developer Insights
                     </div>
@@ -28,6 +28,16 @@
         </div>
     </div>
 </section>
+
+<div class="hover-shadow d-flex flex-wrap justify-content-center" style="transition: all 0.3s ease;">
+    @if(Model is not null && Model.Tags.Any())
+    {
+        foreach(var tag in Model.Tags)
+        {
+            <a asp-controller="Blogs" asp-action="Index"  class="btn btn-outline-primary m-1">@tag.DisplayName</a>
+        }
+    }
+</div>
 
 <!-- Blog post section with vertical card layout -->
 <section id="featured-posts" class="py-4">
@@ -38,11 +48,11 @@
             </div>
         </div>
 
-        @if (Model is not null && Model.Any())
+        @if (Model is not null && Model.Posts.Any())
         {
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
-                    @foreach (var post in Model)
+                    @foreach (var post in Model.Posts)
                     {
                         <div class="card mb-4 border-0 shadow-sm hover-shadow" style="transition: all 0.3s ease;">
                             <div class="position-relative">
@@ -97,22 +107,6 @@
     </div>
 </section>
 
-<!-- Newsletter Section -->
-<section class="bg-light py-5 rounded shadow-sm mt-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <h3 class="fw-bold mb-3">Stay Updated</h3>
-                <p class="text-secondary mb-4">Subscribe to get notified about new articles and tech insights.</p>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control form-control-lg" placeholder="Your email address">
-                    <button class="btn btn-primary" type="button">Subscribe</button>
-                </div>
-                <small class="text-muted">We respect your privacy. Unsubscribe at any time.</small>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Optional: Add custom CSS for hover effects -->
 <style>
