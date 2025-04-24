@@ -25,6 +25,10 @@ public class AdminTagsController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(TagAddRequest tagAddRequest)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(tagAddRequest);
+        }
         var tag = new Tag
         {
             Name = tagAddRequest.Name,
@@ -61,6 +65,11 @@ public class AdminTagsController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(TagEditRequest tagEditRequest)
     {
+        if (!ModelState.IsValid)
+        {
+            //Show failure toast
+            return View(tagEditRequest);
+        }
         var tag = new Tag
         {
             ID = tagEditRequest.ID,

@@ -42,6 +42,10 @@ public class PostsController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(PostAddRequest request)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(request);
+        }
         var post = new BlogPost
         {
             Author = request.Author,
