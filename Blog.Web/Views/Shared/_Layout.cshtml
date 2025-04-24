@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Blog.Web</title>
+    <title>@ViewData["Title"] - Blog</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -13,8 +13,29 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <!--Froala-->
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
-    
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -46,16 +67,17 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <main role="main">
+        <div class="container pb-3">
             @RenderBody()
-        </main>
-    </div>
+        </div>
+    </main>
 
-
-    <footer class="bg-light text-center text-lg-start border-top mt-auto py-3">
-        <div class="container text-center">
-            <span class="text-muted text-center">© @DateTime.Now.Year Made with ❤️ and Mahmood Elbadri</span>
+    <footer class="bg-white text-dark text-center py-4 border-top mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; @DateTime.Now.Year - Badri All rights reserved.</p>
+            <small>Made with ❤️ by Badri</small>
         </div>
     </footer>
 
