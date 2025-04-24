@@ -16,48 +16,59 @@
             <div>
                 <label asp-for="ID" class="form-label mt-4"></label>
                 <input asp-for="ID" type="text" class="form-control" readonly />
+                <span asp-validation-for="ID" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Header" class="form-label mt-4"></label>
                 <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" />
+                <span asp-validation-for="Header" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="PostTitle" class="form-label mt-4"></label>
                 <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" />
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Content" class="form-label mt-4"></label>
                 <textarea asp-for="Content" id="content" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="ShortDescription" class="form-label mt-4"></label>
                 <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" />
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
             </div>
             <div>
                 <label for="formFile" class="form-label mt-4">Featured Image Upload</label>
                 <input class="form-control" type="file" id="featuredImageUpload">
+                <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="FeaturedImageUrl" class="form-label mt-4"></label>
                 <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" />
                 <img src="@Model.FeaturedImageUrl" id="featuredImagePreview" style="@(string.IsNullOrEmpty(Model.FeaturedImageUrl) ? "display: none;" : "display: block;") width: 300px;" alt="Image preview" />
+                <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="UrlHandle" class="form-label mt-4"></label>
                 <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" />
+                <span asp-validation-for="UrlHandle" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="PublishedDate" class="form-label mt-4"></label>
                 <input asp-for="PublishedDate" type="datetime-local" class="form-control" />
+                <span asp-validation-for="PublishedDate" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Author" class="form-label mt-4"></label>
                 <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" />
+                <span asp-validation-for="Author" class="text-danger"></span>
             </div>
 
             <div class="form-check mt-3">
                 <input class="form-check-input grey" type="checkbox" id="visible" value="true" asp-for="IsVisible">
                 <label class="form-check-label" asp-for="IsVisible">Visible</label>
+                <span asp-validation-for="IsVisible" class="text-danger"></span>
             </div>
 
             <div>
@@ -69,6 +80,7 @@
                         class="form-select"
                         id="tagDropdown">
                 </select>
+                <span asp-validation-for="SelectedTags" class="text-danger"></span>
             </div>
 
             <div class="mt-4 d-flex gap-2">
@@ -85,6 +97,7 @@ else
     </div>
 }
 
+<partial name="_ValidationScriptsPartial" />
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>

@@ -13,16 +13,19 @@
     <form asp-action="Add" method="post">
         <div>
             <label asp-for="Name" class="form-label mt-4"></label>
-            <input asp-for="Name" class="form-control" placeholder="Enter Name"/>
+            <input asp-for="Name" class="form-control" placeholder="Enter Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div>
             <label asp-for="DisplayName" class="form-label mt-4"></label>
-            <input asp-for="DisplayName" class="form-control" placeholder="Enter Display Name"/>
+            <input asp-for="DisplayName" class="form-control" placeholder="Enter Display Name" />
+            <span asp-validation-for="DisplayName" class="text-danger"></span>
         </div>
         <div class="mt-2 d-flex gap-2">
             <button type="submit" class="btn btn-success flex-fill">Save</button>
             <a class="btn btn-danger flex-fill" asp-action="Add">Cancel</a>
-        </div>        
+        </div>
     </form>
 
 </div>
+<partial name="_ValidationScriptsPartial" />

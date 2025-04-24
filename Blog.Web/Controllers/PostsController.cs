@@ -74,35 +74,55 @@ public class PostsController : Controller
     public async Task<IActionResult> Edit(Guid id)
     {
         var post = await _postRepository.GetAsync(id);
-        if (post != null)
+
+        if (post == null)
+            return NotFound();
+
+        var allTags = await _tagRepository.GetAllTagsAsync();
+
+        var model = new PostEditRequest
         {
-            var postEditRequest = new PostEditRequest
+            ID = post.ID,
+            Header = post.Header,
+            PostTitle = post.PostTitle,
+            Content = post.Content,
+            ShortDescription = post.ShortDescription,
+            FeaturedImageUrl = post.FeaturedImageUrl,
+            UrlHandle = post.UrlHandle,
+            PublishedDate = post.PublishedDate,
+            Author = post.Author,
+            IsVisible = post.IsVisible,
+
+            SelectedTags = post.Tags.Select(t => t.ID.ToString()).ToArray(),
+
+            Tags = allTags.Select(t => new SelectListItem
             {
-                ID = id,
-                Author = post.Author,
-                Content = post.Content,
-                FeaturedImageUrl = post.FeaturedImageUrl,
-                Header = post.Header,
-                IsVisible = post.IsVisible,
-                PostTitle = post.PostTitle,
-                PublishedDate = post.PublishedDate,
-                ShortDescription = post.ShortDescription,
-                UrlHandle = post.UrlHandle,
-            };
-            postEditRequest.Tags = post.Tags.Select(tmp => new SelectListItem
-            {
-                Text = tmp.Name,
-                Value = tmp.ID.ToString(),
-            });
-            postEditRequest.SelectedTags = post.Tags.Select(tmp => tmp.ID.ToString()).ToArray();
-            return View(postEditRequest);
-        }
-        return RedirectToAction("Index");
+                Text = t.Name,
+                Value = t.ID.ToString()
+            }).ToList()
+        };
+
+        return View(model);
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Edit(PostEditRequest request)
     {
+        if (!ModelState.IsValid)
+        {
+            var allTags = await _tagRepository.GetAllTagsAsync();
+
+            request.Tags = allTags.Select(t => new SelectListItem
+            {
+                Text = t.Name,
+                Value = t.ID.ToString(),
+                Selected = request.SelectedTags != null && request.SelectedTags.Contains(t.ID.ToString())
+            }).ToList();
+
+            return View(request);
+        }
+
         var post = new BlogPost
         {
             ID = request.ID,
@@ -116,24 +136,31 @@ public class PostsController : Controller
             ShortDescription = request.ShortDescription,
             UrlHandle = request.UrlHandle,
         };
+
         var selectedTags = new List<Tag>();
-        foreach (var tag in request.Tags)
+        foreach (var tagId in request.SelectedTags)
         {
-            Guid guid = Guid.Parse(tag.Value);
-            var existingTag = await _tagRepository.GetByIdAsync(guid);
-            if (existingTag != null)
+            if (Guid.TryParse(tagId, out var guid))
             {
-                selectedTags.Add(existingTag);
+                var existingTag = await _tagRepository.GetByIdAsync(guid);
+                if (existingTag != null)
+                {
+                    selectedTags.Add(existingTag);
+                }
             }
         }
+
         post.Tags = selectedTags;
+
         var updatedPost = await _postRepository.UpdateAsync(post);
         if (updatedPost != null)
         {
             return RedirectToAction(nameof(Index));
         }
+
         return RedirectToAction("Edit", new { id = post.ID });
     }
+
 
     [HttpGet]
     public async Task<IActionResult> Delete(Guid id)

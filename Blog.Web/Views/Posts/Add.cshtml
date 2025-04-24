@@ -14,48 +14,59 @@
         <div class="mb-3">
             <label asp-for="Header" class="form-label">Header</label>
             <input asp-for="Header" type="text" class="form-control" placeholder="Enter Header" required />
+            <span asp-validation-for="Header" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="PostTitle" class="form-label">Post Title</label>
             <input asp-for="PostTitle" type="text" class="form-control" placeholder="Enter Post Title" required />
+            <span asp-validation-for="PostTitle" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Content" class="form-label">Content</label>
             <textarea asp-for="Content" id="content" class="form-control" rows="5" required></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="ShortDescription" class="form-label">Short Description</label>
             <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Enter Short Description" required />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Featured Image Upload</label>
             <input class="form-control" type="file" id="featuredImageUpload" name="featuredImageFile" accept="image/*" />
+            <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="FeaturedImageUrl" class="form-label">Featured Image URL</label>
             <input asp-for="FeaturedImageUrl" type="text" class="form-control" id="featuredImageUrl" placeholder="Enter Feature Image URL" readonly />
             <img src="" id="featuredImagePreview" class="mt-2" style="display: none; max-width: 300px; height: auto;" alt="Featured Image Preview" />
+            <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="UrlHandle" class="form-label">URL Handle</label>
             <input asp-for="UrlHandle" type="text" class="form-control" placeholder="Enter URL Handler" required />
+            <span asp-validation-for="UrlHandle" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="PublishedDate" class="form-label">Published Date</label>
             <input asp-for="PublishedDate" type="datetime-local" class="form-control" required />
+            <span asp-asp-validation-for="PublishedDate" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Author" class="form-label">Author</label>
             <input asp-for="Author" type="text" class="form-control" placeholder="Enter Author" required />
+            <span asp-validation-for="Author" class="text-danger"></span>
         </div>
         <div class="mb-3 form-check">
             <input class="form-check-input" type="checkbox" id="visible" asp-for="IsVisible">
             <label class="form-check-label" asp-for="IsVisible">Make post visible</label>
+            <span asp-validation-for="IsVisible" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="SelectedTags" class="form-label">Select Tags</label>
             <select asp-for="SelectedTags" asp-items="@Model.Tags" multiple class="form-select" id="tagDropdown">
             </select>
+            <span asp-validation-for="SelectedTags" class="text-danger"></span>
         </div>
 
         <div class="mt-4 d-flex gap-2">
@@ -75,6 +86,8 @@
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <!-- Froala Editor JS -->
     <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    
+    <partial name="_ValidationScriptsPartial" />
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
