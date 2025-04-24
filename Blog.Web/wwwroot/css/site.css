@@ -13,6 +13,30 @@
  */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700&display=swap");
 
+.brand-wrapper {
+    transition: all 0.3s ease-in-out;
+}
+
+.logo {
+    transition: transform 0.3s ease;
+    filter: grayscale(30%) brightness(90%);
+}
+
+.brand-name {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #343a40;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.brand-wrapper:hover .logo {
+    transform: scale(1.1) rotate(-5deg);
+    filter: brightness(100%);
+}
+
+.brand-wrapper:hover .brand
+
+
 :root,
 [data-bs-theme=light] {
     --bs-blue: #007bff;
