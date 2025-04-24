@@ -29,7 +29,7 @@
     </div>
 </section>
 
-<!-- Blog post section with improved card design -->
+<!-- Blog post section with vertical card layout -->
 <section id="featured-posts" class="py-4">
     <div class="container">
         <div class="row mb-4">
@@ -40,20 +40,20 @@
 
         @if (Model is not null && Model.Any())
         {
-            <div class="row g-4">
-                @foreach (var post in Model)
-                {
-                    <div class="col-lg-6 col-xl-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm hover-shadow" style="transition: all 0.3s ease;">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    @foreach (var post in Model)
+                    {
+                        <div class="card mb-4 border-0 shadow-sm hover-shadow" style="transition: all 0.3s ease;">
                             <div class="position-relative">
                                 <img src="@post.FeaturedImageUrl" class="card-img-top" alt="@post.PostTitle"
-                                     style="height: 200px; object-fit: cover;">
+                                     style="height: 250px; object-fit: cover;">
                                 <div class="position-absolute top-0 end-0 bg-white text-dark m-2 px-2 py-1 rounded small">
                                     @post.Author
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">@post.PostTitle</h5>
+                                <h4 class="card-title fw-bold">@post.PostTitle</h4>
                                 <p class="card-text text-secondary">@post.ShortDescription</p>
                             </div>
                             <div class="card-footer bg-white border-top-0">
@@ -66,12 +66,12 @@
                                             </span>
                                         }
                                     </small>
-                                    <a asp-controller="Posts" asp-action="View" asp-route-id="@post.ID" class="btn btn-sm btn-outline-primary">Read More</a>
+                                    <a asp-controller="Posts" asp-action="View" asp-route-id="@post.ID" class="btn btn-outline-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         }
         else
