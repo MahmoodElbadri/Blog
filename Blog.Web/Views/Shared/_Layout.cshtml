@@ -18,23 +18,23 @@
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
     <style>
         html, body {
-            height: 100%;
-            margin: 0;
+        height: 100%;
+        margin: 0;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
         }
 
         main {
-            flex: 1 0 auto;
+        flex: 1 0 auto;
         }
 
         footer {
-            flex-shrink: 0;
-            margin-top: auto;
+        flex-shrink: 0;
+        margin-top: auto;
         }
     </style>
 </head>
@@ -49,7 +49,7 @@
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -59,9 +59,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
                             <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin
+                                Admin Panel
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="AdminTags">Add Tag</a></li>
@@ -70,7 +72,8 @@
                                 <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="Posts">Posts</a></li>
                                 <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="Posts">Add Post</a></li>
                             </ul>
-                        </li>
+                        </li>                            
+                        }
                     </ul>
 
                     <div class="navbar-nav ms-auto align-items-center">
