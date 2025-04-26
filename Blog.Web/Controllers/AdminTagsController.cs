@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class AdminTagsController : Controller
 {
     private readonly ITagRepository _tagRepository;
@@ -17,7 +18,6 @@ public class AdminTagsController : Controller
         this._tagRepository = tagRepository;
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult Add()
     {
