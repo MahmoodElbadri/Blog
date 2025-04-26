@@ -73,28 +73,27 @@
                         </li>
                     </ul>
 
-                    <div class="navbar-nav ms-auto align-content-center">
+                    <div class="navbar-nav ms-auto align-items-center">
                         @if (signInManager.IsSignedIn(User))
                         {
-                            <div class="nav-item">
-                                Hi @User?.Identity?.Name
+                            <div class="nav-item me-3">
+                                <span class="nav-link text-dark">Hi, @User?.Identity?.Name</span>
                             </div>
                             <div class="nav-item">
-                                <a class="nav-link text-dark btn" asp-controller="Accounts" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark btn btn-outline-danger" asp-controller="Accounts" asp-action="Logout">Logout</a>
                             </div>
                         }
                         else
                         {
-                            <div class="nav-item">
-                                <a class="nav-link text-dark btn" asp-controller="Accounts" asp-action="Register">Register</a>
+                            <div class="nav-item me-2">
+                                <a class="nav-link text-dark btn btn-outline-primary" asp-controller="Accounts" asp-action="Register">Register</a>
                             </div>
-                            <div class="navbar-nav ms-auto">
-                                <div class="nav-item">
-                                    <a class="nav-link text-dark btn" asp-controller="Accounts" asp-action="Login">Login</a>
-                                </div>
+                            <div class="nav-item">
+                                <a class="nav-link text-dark btn btn-outline-success" asp-controller="Accounts" asp-action="Login">Login</a>
                             </div>
                         }
                     </div>
+
                 </div>
         </nav>
     </header>

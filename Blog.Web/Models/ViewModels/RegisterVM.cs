@@ -7,7 +7,7 @@ public class RegisterVM
     [Required]
     [StringLength(50)]
     [Display(Name = "User Name")]
-    public string? Name { get; set; }
+    public string? UserName { get; set; }
 
     [Required]
     [EmailAddress]

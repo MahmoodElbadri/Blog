@@ -28,7 +28,7 @@ public class AccountsController : Controller
         {
             var user = new IdentityUser()
             {
-                UserName = registerVM.Name,
+                UserName = registerVM.UserName,
                 Email = registerVM.Email,
             };
             var result = await _userManager.CreateAsync(user, registerVM.Password);
@@ -66,6 +66,7 @@ public class AccountsController : Controller
                 return RedirectToAction("Index", "Home");
             }
         }
+        ModelState.AddModelError("", "Username or password is incorrect");
         return View(loginVM);
     }
 }

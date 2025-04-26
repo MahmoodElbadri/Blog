@@ -160,7 +160,7 @@ namespace Blog.Web.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                columns: new[] { "Id", "ConcurrencyStamp", "UserName", "NormalizedName" },
                 values: new object[,]
                 {
                     { "5000a19e-1049-47cf-a93b-44e252bdff0d", "5000a19e-1049-47cf-a93b-44e252bdff0d", "SuperAdmin", "SUPERADMIN" },

@@ -5,8 +5,7 @@ namespace Blog.Web.Models.ViewModels;
 public class LoginVM
 {
     [Required]
-    [EmailAddress]
-    [Display(Name = "User Name")]
+    [Display(Name = "User UserName")]
     public string? UserName { get; set; }
 
     [Required]
