@@ -69,4 +69,11 @@ public class AccountsController : Controller
         ModelState.AddModelError("", "Username or password is incorrect");
         return View(loginVM);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
 }
