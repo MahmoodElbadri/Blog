@@ -16,6 +16,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <!--Froala-->
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+   <!--Icons-->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         html, body {
         height: 100%;
@@ -59,41 +61,41 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
-                            <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin Panel
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="AdminTags">Add Tag</a></li>
-                                <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="AdminTags">Tags</a></li>
-                                <li><hr class="text-dark dropdown-divider"></li>
-                                <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="Posts">Posts</a></li>
-                                <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="Posts">Add Post</a></li>
-                            </ul>
-                        </li>                            
+                                <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin Panel
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="AdminTags">Add Tag</a></li>
+                                    <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="AdminTags">Tags</a></li>
+                                    <li><hr class="text-dark dropdown-divider"></li>
+                                    <li><a class="text-dark dropdown-item" asp-action="Index" asp-controller="Posts">Posts</a></li>
+                                    <li><a class="text-dark dropdown-item" asp-action="Add" asp-controller="Posts">Add Post</a></li>
+                                </ul>
+                            </li>                            
                         }
                     </ul>
 
                     <div class="navbar-nav ms-auto align-items-center">
-                        @if (signInManager.IsSignedIn(User))    
+                        @if (signInManager.IsSignedIn(User))
                         {
-                            <div class="nav-item me-3">
-                                <span class="nav-link text-dark">Hi, @User?.Identity?.Name</span>
-                            </div>
-                            <div class="nav-item">
-                                <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Logout">Logout</a>
-                            </div>
+                                <div class="nav-item me-3">
+                                    <span class="nav-link text-dark">Hi, @User?.Identity?.Name</span>
+                                </div>
+                                <div class="nav-item">
+                                    <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Logout">Logout</a>
+                                </div>
                         }
                         else
                         {
-                            <div class="nav-item me-2">
-                                <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Register">Register</a>
-                            </div>
-                            <div class="nav-item">
-                                <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Login">Login</a>
-                            </div>
+                                <div class="nav-item me-2">
+                                    <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Register">Register</a>
+                                </div>
+                                <div class="nav-item">
+                                    <a class="nav-link text-dark btn " asp-controller="Accounts" asp-action="Login">Login</a>
+                                </div>
                         }
                     </div>
 
