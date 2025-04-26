@@ -49,8 +49,9 @@ public class AccountsController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string ReturnUrl)
     {
+        var loginVM = new LoginVM { ReturnUrl = ReturnUrl };
         return View();
     }
 
@@ -63,7 +64,8 @@ public class AccountsController : Controller
                 isPersistent: false, lockoutOnFailure: false);
             if (signInResult.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                if (!string.IsNullOrEmpty(loginVM.ReturnUrl) && Url.IsLocalUrl(loginVM.ReturnUrl))
+                    return Redirect(loginVM.ReturnUrl);
             }
         }
         ModelState.AddModelError("", "Username or password is incorrect");

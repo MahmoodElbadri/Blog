@@ -1,6 +1,7 @@
 ﻿using Blog.Web.Models.Domain;
 using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Web.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class PostsController : Controller
 {
     private readonly ITagRepository _tagRepository;

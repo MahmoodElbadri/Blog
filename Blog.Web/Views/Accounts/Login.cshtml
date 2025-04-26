@@ -21,6 +21,7 @@
                             <input type="password" class="form-control" asp-for="Password" placeholder="Password" autocomplete="off">
                             <span class="text-danger" asp-validation-for="Password"></span>
                         </div>
+                        <input type="hidden" asp-for="ReturnUrl" />
                         <div class="btn-group mt-3 col-12 flex-row">
                             <button type="submit" class="btn col-6 btn-primary">LOGIN</button>
                             <a asp-action="Index" asp-controller="Home" class="btn col-6 btn-danger">BACK</a>
