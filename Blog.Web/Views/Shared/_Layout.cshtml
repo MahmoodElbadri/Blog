@@ -51,7 +51,9 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -69,6 +71,13 @@
                             </ul>
                         </li>
                     </ul>
+
+                    <div class="navbar-nav ms-auto">
+                        <div class="nav-item">
+                            <a class="nav-link text-dark btn" asp-controller="Accounts" asp-action="Register">Register</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </nav>
@@ -82,7 +91,7 @@
 
     <footer class="bg-white text-dark text-center py-4 border-top mt-auto">
         <div class="container">
-            <hr style="border:0; height:1px; background-color:#ccc; margin: 20px 0; opacity: 0.7"/>
+            <hr style="border:0; height:1px; background-color:#ccc; margin: 20px 0; opacity: 0.7" />
             <p class="mb-0">&copy; @DateTime.Now.Year - Badri All rights reserved.</p>
             <small>Made with ❤️ by Badri</small>
         </div>
