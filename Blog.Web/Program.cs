@@ -1,6 +1,7 @@
 using Blog.Web.Data;
 using Blog.Web.Models.SettingsModel;
 using Blog.Web.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,12 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddDbContext<AuthDbContext>(optionsAction: options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
+});
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>();
 
 var app = builder.Build();
 
@@ -29,6 +36,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
