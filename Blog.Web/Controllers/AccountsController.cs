@@ -66,6 +66,8 @@ public class AccountsController : Controller
             {
                 if (!string.IsNullOrEmpty(loginVM.ReturnUrl) && Url.IsLocalUrl(loginVM.ReturnUrl))
                     return Redirect(loginVM.ReturnUrl);
+                else
+                    return RedirectToAction("Index", "Home");
             }
         }
         ModelState.AddModelError("", "Username or password is incorrect");

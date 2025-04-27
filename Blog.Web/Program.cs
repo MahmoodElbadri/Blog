@@ -41,6 +41,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Accounts/Logout";
 });
 
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
