@@ -2,6 +2,7 @@
 using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -12,10 +13,15 @@ namespace Blog.Web.Controllers;
 public class LikesController : ControllerBase
 {
     private readonly ILikeRepository _likeRepository;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public LikesController(ILikeRepository likeRepository)
+    public LikesController(ILikeRepository likeRepository, SignInManager<IdentityUser> signInManager,
+        UserManager<IdentityUser> userManager)
     {
         this._likeRepository = likeRepository;
+        this._signInManager = signInManager;
+        this._userManager = userManager;
     }
     [HttpPost]
     public async Task<IActionResult> LikePost(LikeAddRequest likeAddRequest)

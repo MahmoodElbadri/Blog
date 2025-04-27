@@ -6,4 +6,5 @@ public interface ILikeRepository
 {
     Task<int> GetTotalLikes(Guid postId);
     Task<Like> AddLikeAsync(Like like);
+    Task<IEnumerable<Like>> GetLikesForPost(Guid postId);
 }

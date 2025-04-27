@@ -21,6 +21,11 @@ public class LikeRepository : ILikeRepository
         return like;
     }
 
+    public async Task<IEnumerable<Like>> GetLikesForPost(Guid postId)
+    {
+        return await _dbContext.Likes.Where(tmp => tmp.PostID == postId).ToListAsync();
+    }
+
     public async Task<int> GetTotalLikes(Guid postId)
     {
         return await _dbContext.Likes.Where(tmp => tmp.PostID == postId)?.CountAsync();

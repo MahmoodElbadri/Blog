@@ -25,9 +25,18 @@
                             <div class="align-items-right">
                                 @if (_signInManager.IsSignedIn(User))
                                 {
-                                    <a style="cursor:pointer" id="btnLike">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                    </a>
+                                    if (Model.Liked)
+                                    {
+                                        <i class='bi bi-hand-thumbs-up-fill'></i>
+                                        @Html.Raw("Liked")
+                                        ;
+                                    }
+                                    else
+                                    {
+                                        <a style="cursor:pointer" id="btnLike">
+                                            <i class="bi bi-hand-thumbs-up"></i>
+                                        </a>
+                                    }
                                 }
                                 <span id="likeCount">@Model.TotalLikes Like(s)</span>
                             </div>
