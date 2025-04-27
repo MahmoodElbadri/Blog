@@ -1,62 +1,65 @@
 ﻿@model BlogVM
 @inject SignInManager<IdentityUser> _signInManager
+
 @{
     ViewData["Title"] = Model?.PostTitle ?? "Blog";
 }
 
-<div class="container py-4">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10 col-lg-8">
             @if (Model is not null)
             {
                 <!-- Post Header -->
-                <div class="mb-4">
-                    <h1 class="fw-bold mb-3">@Model.PostTitle</h1>
-                    <div class="d-flex align-items-center mb-4">
+                <div class="mb-5 border-bottom pb-3">
+                    <h1 class="display-5 fw-semibold mb-3 text-center">@Model.PostTitle</h1>
+
+                    <div class="d-flex justify-content-between align-items-center text-muted small mb-2">
                         <div>
-                            <span class="fw-bold">@Model.Author</span>
-                            <span class="text-muted mx-2">•</span>
-                            <span class="text-muted">
-                                @{
-                                    var days = (Model.PublishedDate - DateTime.Now).Days;
-                                    @(days == 0 ? "Published today" : days == 1 ? "Published yesterday" : $"Published {Math.Abs(days)} days ago")
-                                }
-                            </span>
-                            <div class="align-items-right">
-                                @if (_signInManager.IsSignedIn(User))
-                                {
-                                    if (Model.Liked)
-                                    {
-                                        <i class='bi bi-hand-thumbs-up-fill'></i>
-                                        @Html.Raw("Liked")
-                                        ;
-                                    }
-                                    else
-                                    {
-                                        <a style="cursor:pointer" id="btnLike">
-                                            <i class="bi bi-hand-thumbs-up"></i>
-                                        </a>
-                                    }
-                                }
-                                <span id="likeCount">@Model.TotalLikes Like(s)</span>
-                            </div>
+                            <i class="bi bi-person-circle me-1"></i> @Model.Author
                         </div>
+                        <div>
+                            <i class="bi bi-calendar-event me-1"></i>
+                            @{
+                                var days = (Model.PublishedDate - DateTime.Now).Days;
+                                @(days == 0 ? "Published today" : days == 1 ? "Published yesterday" : $"Published {Math.Abs(days)} days ago")
+                            }
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center gap-2">
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            @if (Model.Liked)
+                            {
+                                <span class="text-success">
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> Liked
+                                </span>
+                            }
+                            else
+                            {
+                                <a style="cursor:pointer" id="btnLike" class="text-primary">
+                                    <i class="bi bi-hand-thumbs-up"></i> Like
+                                </a>
+                            }
+                        }
+                        <span class="badge bg-secondary" id="likeCount">@Model.TotalLikes Likes</span>
                     </div>
                 </div>
 
                 <!-- Featured Image -->
-                <img src="@Model.FeaturedImageUrl" class="img-fluid rounded mb-4" alt="@Model.PostTitle">
+                <img src="@Model.FeaturedImageUrl" class="img-fluid rounded mb-4 shadow-sm" alt="@Model.PostTitle">
 
-                <!-- Post Description -->
-                <p class="lead mb-4">@Model.ShortDescription</p>
+                <!-- Post Short Description -->
+                <p class="lead text-muted mb-4">@Model.ShortDescription</p>
 
                 <!-- Tags -->
                 @if (Model.Tags != null && Model.Tags.Any())
                 {
-                    <div class="mb-4">
+                    <div class="mb-4 d-flex flex-wrap gap-2">
                         @foreach (var tag in Model.Tags)
                         {
-                            <span class="badge bg-primary me-2">@tag.Name</span>
+                            <span class="badge rounded-pill bg-primary">@tag.Name</span>
                         }
                     </div>
                 }
@@ -65,15 +68,78 @@
                 <div class="mb-5">
                     @Html.Raw(Model.Content)
                 </div>
+
+                <!-- Comments Section -->
+                <div class="card shadow-sm mb-5">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Comments</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <form method="post" class="mb-4">
+                                <input type="hidden" asp-for="ID" />
+                                <input type="hidden" asp-for="UrlHandle" />
+
+                                <div class="mb-3">
+                                    <label asp-for="Comment" class="form-label">Add a Comment</label>
+                                    <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100">Post Comment</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p class="text-muted">You must be signed in to leave a comment.</p>
+                        }
+
+                        <div class="list-group">
+                            @if (Model.Comments != null && Model.Comments.Any())
+                            {
+                                foreach (var comment in Model.Comments)
+                                {
+                                    <div class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">@comment.UserName</h5>
+                                            <small class="text-muted">@comment.DateAdded.ToString("dd MMM yyyy")</small>
+                                        </div>
+                                        <p class="mb-1">@comment.Description</p>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="text-center text-muted">No comments yet. Be the first to comment!</div>
+                            }
+                        </div>
+                    </div>
+                </div>
             }
             else
             {
-                <p class="lead">Blog post not found.</p>
+                <div class="alert alert-warning text-center">
+                    <p class="lead">Blog post not found.</p>
+                </div>
             }
-            <a class="btn btn-primary col-12" asp-controller="Home" asp-action="Index">Back to Blogs</a>
+
+            <a class="btn btn-outline-primary w-100" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-arrow-left"></i> Back to Blogs
+            </a>
         </div>
     </div>
+</div>
 
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="likeToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                You liked this post! 👍
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
 </div>
 
 @section Scripts
@@ -81,10 +147,10 @@
     <script>
         const btnLike = document.getElementById("btnLike");
         const likeCount = document.getElementById("likeCount");
+        const likeToast = new bootstrap.Toast(document.getElementById('likeToast'));
 
-        async function getLikes()
-        {
-            fetch('/api/likes/@Model.ID',{
+        async function getLikes() {
+            fetch('/api/likes/@Model.ID', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,27 +158,31 @@
                 }
             })
             .then(response => response.json())
-            .then(result => likeCount.innerHTML = result)
+            .then(result => likeCount.innerHTML = result + ' Likes');
         }
 
-        async function likePost(){
-            fetch('/api/likes',{
+        async function likePost() {
+            fetch('/api/likes', {
                 method: 'POST',
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                     'Accept': '*/*'
                 },
                 body: JSON.stringify({
-                        postID : '@Model.ID',
-                        userID : '@_signInManager.UserManager.GetUserId(User)'
+                    postID: '@Model.ID',
+                    userID: '@_signInManager.UserManager.GetUserId(User)'
                 })
-                }).then(()=>{
-                    btnLike.innerHTML = "<i class='bi bi-hand-thumbs-up-fill'></i>Liked "
-                    btnLike.removeEventListener('click', likePost);
-                    getLikes();
-                });
+            })
+            .then(() => {
+                btnLike.innerHTML = "<i class='bi bi-hand-thumbs-up-fill'></i> Liked";
+                btnLike.removeEventListener('click', likePost);
+                getLikes();
+                likeToast.show(); // Show the Toast 🎉
+            });
         }
 
-        btnLike.addEventListener('click', likePost);
+        if (btnLike) {
+            btnLike.addEventListener('click', likePost);
+        }
     </script>
 }

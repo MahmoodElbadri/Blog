@@ -18,4 +18,6 @@ public class BlogVM
     public ICollection<Tag> Tags { get; set; }
     public int TotalLikes { get; set; }
     public bool Liked { get; set; }
+    public string? Comment { get; set; }
+    public ICollection<BlogComment> Comments { get; set; }
 }

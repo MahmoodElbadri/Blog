@@ -2,8 +2,9 @@
 
 public class Comment
 {
-    public Guid Id { get; set; }
+    public Guid ID { get; set; }
     public string Description { get; set; }
     public Guid PostId { get; set; }
     public DateTime DateAdded { get; set; }
+    public Guid UserID { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Blog.Web.Models.ViewModels;
+﻿using Blog.Web.Models.Domain;
+using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +13,17 @@ public class BlogsController : Controller
     private readonly ILikeRepository _likeRepository;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly IPostCommentRepository _postCommentRepository;
 
     public BlogsController(IPostRepository postRepository, ILikeRepository likeRepository
-        , SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        , SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+        IPostCommentRepository postCommentRepository)
     {
         this._postRepository = postRepository;
         this._likeRepository = likeRepository;
         this._signInManager = signInManager;
         this._userManager = userManager;
+        this._postCommentRepository = postCommentRepository;
     }
     [HttpGet]
     public async Task<IActionResult> Index(string urlHandle)
@@ -42,6 +46,20 @@ public class BlogsController : Controller
                 }
             }
 
+            var blogComments = await _postCommentRepository.GetCommentsForPostAsync(post.ID);
+
+            var blogCommentsVM = new List<BlogComment>();
+            foreach (var blogComment in blogComments)
+            {
+                blogCommentsVM.Add(new BlogComment
+                {
+                    UserName = (await _userManager.FindByIdAsync(blogComment.UserID.ToString())).UserName,
+                    DateAdded = DateTime.Now,
+                    Description = blogComment.Description
+                });
+            }
+
+
             blogVM = new BlogVM
             {
                 ID = post.ID,
@@ -56,10 +74,29 @@ public class BlogsController : Controller
                 IsVisible = post.IsVisible,
                 Tags = post.Tags,
                 TotalLikes = likes,
-                Liked = liked
+                Liked = liked,
+                Comments = blogCommentsVM,
             };
             return View(blogVM);
         }
         return View(post);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Index(BlogVM blogVM)
+    {
+        if (_signInManager.IsSignedIn(User))
+        {
+            var comment = new Comment
+            {
+                PostId = blogVM.ID,
+                Description = blogVM.Comment,
+                UserID = Guid.Parse(_userManager.GetUserId(User)),
+                DateAdded = DateTime.Now,
+            };
+            await _postCommentRepository.AddCommentAsync(comment);
+            return RedirectToAction("Index", "Blogs", new { urlHandle = blogVM.UrlHandle });
+        }
+        return View(blogVM);
     }
 }
