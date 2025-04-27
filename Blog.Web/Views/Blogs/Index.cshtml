@@ -9,54 +9,57 @@
         <div class="col-md-8">
             @if (Model is not null)
             {
-                    <!-- Post Header -->
-                    <div class="mb-4">
-                        <h1 class="fw-bold mb-3">@Model.PostTitle</h1>
-                        <div class="d-flex align-items-center mb-4">
-                            <div>
-                                <span class="fw-bold">@Model.Author</span>
-                                <span class="text-muted mx-2">•</span>
-                                <span class="text-muted">
+                <!-- Post Header -->
+                <div class="mb-4">
+                    <h1 class="fw-bold mb-3">@Model.PostTitle</h1>
+                    <div class="d-flex align-items-center mb-4">
+                        <div>
+                            <span class="fw-bold">@Model.Author</span>
+                            <span class="text-muted mx-2">•</span>
+                            <span class="text-muted">
                                 @{
                                     var days = (Model.PublishedDate - DateTime.Now).Days;
                                     @(days == 0 ? "Published today" : days == 1 ? "Published yesterday" : $"Published {Math.Abs(days)} days ago")
                                 }
-                                </span>
-                                 <div class="align-items-right">
-                            @if (_signInManager.IsSignedIn(User))
-                            {
-                              <a herf="#"><i class="bi bi-hand-thumbs-up"></i></a>
-                            }
-                           @Model.TotalLikes Like </div>
+                            </span>
+                            <div class="align-items-right">
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <a style="cursor:pointer" id="btnLike">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                    </a>
+                                }
+                                @Model.TotalLikes Like
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Featured Image -->
-                    <img src="@Model.FeaturedImageUrl" class="img-fluid rounded mb-4" alt="@Model.PostTitle">
+                <!-- Featured Image -->
+                <img src="@Model.FeaturedImageUrl" class="img-fluid rounded mb-4" alt="@Model.PostTitle">
 
-                    <!-- Post Description -->
-                    <p class="lead mb-4">@Model.ShortDescription</p>
+                <!-- Post Description -->
+                <p class="lead mb-4">@Model.ShortDescription</p>
 
-                    <!-- Tags -->
+                <!-- Tags -->
                 @if (Model.Tags != null && Model.Tags.Any())
                 {
-                            <div class="mb-4">
+                    <div class="mb-4">
                         @foreach (var tag in Model.Tags)
                         {
-                                        <span class="badge bg-primary me-2">@tag.Name</span>
+                            <span class="badge bg-primary me-2">@tag.Name</span>
                         }
-                            </div>
+                    </div>
                 }
 
-                    <!-- Post Content -->
-                    <div class="mb-5">
+                <!-- Post Content -->
+                <div class="mb-5">
                     @Html.Raw(Model.Content)
-                    </div>
+                </div>
             }
             else
             {
-                    <p class="lead">Blog post not found.</p>
+                <p class="lead">Blog post not found.</p>
             }
             <a class="btn btn-primary col-12" asp-controller="Home" asp-action="Index">Back to Blogs</a>
         </div>
@@ -64,3 +67,25 @@
 
 </div>
 
+@section Scripts
+{
+    <script>
+        const btnLike = document.getElementById("btnLike");
+
+        async function likePost(){
+            fetch('/api/likes',{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({
+                        postID : '@Model.ID',
+                        userID : '@_signInManager.UserManager.GetUserId(User)'
+                })
+                }).then(console.log("Request Finished"));
+        }
+
+        btnLike.addEventListener('click', likePost);
+    </script>
+}
