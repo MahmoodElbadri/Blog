@@ -29,7 +29,7 @@
                                         <i class="bi bi-hand-thumbs-up"></i>
                                     </a>
                                 }
-                                @Model.TotalLikes Like
+                                <span id="likeCount">@Model.TotalLikes Like(s)</span>
                             </div>
                         </div>
                     </div>
@@ -71,6 +71,20 @@
 {
     <script>
         const btnLike = document.getElementById("btnLike");
+        const likeCount = document.getElementById("likeCount");
+
+        async function getLikes()
+        {
+            fetch('/api/likes/@Model.ID',{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                }
+            })
+            .then(response => response.json())
+            .then(result => likeCount.innerHTML = result)
+        }
 
         async function likePost(){
             fetch('/api/likes',{
@@ -83,7 +97,11 @@
                         postID : '@Model.ID',
                         userID : '@_signInManager.UserManager.GetUserId(User)'
                 })
-                }).then(console.log("Request Finished"));
+                }).then(()=>{
+                    btnLike.innerHTML = "<i class='bi bi-hand-thumbs-up-fill'></i>Liked "
+                    btnLike.removeEventListener('click', likePost);
+                    getLikes();
+                });
         }
 
         btnLike.addEventListener('click', likePost);

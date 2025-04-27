@@ -28,4 +28,11 @@ public class LikesController : ControllerBase
         await _likeRepository.AddLikeAsync(model);
         return Ok();
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetLikes(Guid id)
+    {
+        var likes = await _likeRepository.GetTotalLikes(id);
+        return Ok(likes);
+    }
 }
