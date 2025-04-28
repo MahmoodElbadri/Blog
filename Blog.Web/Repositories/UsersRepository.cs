@@ -1,5 +1,6 @@
 ﻿using Blog.Web.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Repositories;
 
@@ -11,8 +12,14 @@ public class UsersRepository : IUsersRepository
     {
         this._dbContext = dbContext;
     }
-    public Task<IEnumerable<IdentityUser>> GetAllUsersAsync()
+    public async Task<IEnumerable<IdentityUser>> GetAllUsersAsync()
     {
-        throw new NotImplementedException();
+        var users = await _dbContext.Users.ToListAsync();
+        var superAdminUser = users.FirstOrDefault(tmp => tmp.Email == "superadmin@badri.com");
+        if (superAdminUser is not null)
+        {
+            users.Remove(superAdminUser);
+        }
+        return users;
     }
 }

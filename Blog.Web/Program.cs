@@ -43,6 +43,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<IPostCommentRepository, PostCommentRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 
