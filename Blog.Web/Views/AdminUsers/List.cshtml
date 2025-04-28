@@ -1,4 +1,5 @@
 ﻿@model UserVM
+@inject SignInManager<IdentityUser> _signInManager
 @{
     ViewData["Title"] = "List";
 }
@@ -9,6 +10,13 @@
         <h1>Users</h1>
     </div>
 </div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success  px-4 py-2" data-bs-toggle="modal" data-bs-target="#CreateUser">
+    + Create New User
+</button>
+
+
 
 <div class="container">
     @if (Model.Users.Any() && Model.Users != null)
@@ -35,6 +43,55 @@
     }
     else
     {
-<strong>No users found.</strong>
+        <strong>No users found.</strong>
     }
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="CreateUser" tabindex="-1" aria-labelledby="CreateUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-sm rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" id="CreateUserLabel">Create New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="List">
+                    <div class="mb-3">
+                        <label asp-for="UserName" class="form-label">Username</label>
+                        <input type="text" class="form-control" asp-for="UserName" placeholder="Enter username" required />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" asp-for="Email" class="form-label">Email</label>
+                        <input type="email" class="form-control" asp-for="Email" placeholder="Enter email" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input type="password" class="form-control" asp-for="Password" placeholder="Enter password" required />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 d-flex gap-2 col-6 ">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="UserRole" checked disabled />
+                            <label class="form-check-label" for="UserRole">User</label>
+                        </div>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" asp-for="IsAdmin" />
+                                <label class="form-check-label" asp-for="IsAdmin">Admin</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="mt-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-success flex-fill">Save</button>
+                        <a class="btn btn-danger flex-fill" data-bs-dismiss="modal">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -2,7 +2,9 @@
 using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Blog.Web.Controllers;
 
@@ -10,10 +12,13 @@ namespace Blog.Web.Controllers;
 public class AdminUsersController : Controller
 {
     private readonly IUsersRepository _usersRepository;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public AdminUsersController(IUsersRepository usersRepository)
+    public AdminUsersController(IUsersRepository usersRepository,
+        UserManager<IdentityUser> userManager)
     {
         this._usersRepository = usersRepository;
+        this._userManager = userManager;
     }
 
     public async Task<IActionResult> List()
@@ -32,6 +37,34 @@ public class AdminUsersController : Controller
             });
         }
 
+        return View(userVM);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> List(UserVM userVM)
+    {
+        var user = new IdentityUser
+        {
+            Email = userVM.Email,
+            UserName = userVM.UserName,
+        };
+        var result = await _userManager.CreateAsync(user, userVM.Password);
+        if (result is not null)
+        {
+            if (result.Succeeded)
+            {
+                var roles = new List<string>() { "User" };
+                if (userVM.IsAdmin)
+                {
+                    roles.Add("Admin");
+                }
+                result = await _userManager.AddToRolesAsync(user, roles);
+                if (result.Succeeded && result is not null)
+                {
+                    return RedirectToAction("List");
+                }
+            }
+        }
         return View(userVM);
     }
 }
