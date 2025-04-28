@@ -1,0 +1,40 @@
+﻿@model UserVM
+@{
+    ViewData["Title"] = "List";
+}
+
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Users</h1>
+    </div>
+</div>
+
+<div class="container">
+    @if (Model.Users.Any() && Model.Users != null)
+    {
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.ID</td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+<strong>No users found.</strong>
+    }
+</div>
