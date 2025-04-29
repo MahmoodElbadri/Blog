@@ -27,8 +27,58 @@
         <thead>
             <tr>
                 <th scope="col">Tag ID</th>
-                <th scope="col">Tag Name</th>
-                <th scope="col">Tag Display Name</th>
+                <th scope="col">
+                    Tag Name
+                    <span>
+                        <span>
+                            <a class="btn btn-light"
+                               asp-controller="AdminTags"
+                               asp-action="Index"
+                               asp-route-sortBy="Name"
+                               asp-route-searchQuery = "@ViewBag.SearchQuery"
+                               asp-route-orderBy="Asc">
+                               
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                        </span>
+                        <span>
+                            <a class="btn btn-light"
+                               asp-controller="AdminTags"
+                               asp-action="Index"
+                               asp-route-sortBy="Name"
+                               asp-route-searchQuery="@ViewBag.SearchQuery"
+                               asp-route-orderBy="Desc">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
+                    </span>
+                </th>
+                <th scope="col">Tag Display Name
+                    <span>
+                        <span>
+                            <a class="btn btn-light"
+                               asp-controller="AdminTags"
+                               asp-action="Index"
+                               asp-route-sortBy="DisplayName"
+                               asp-route-searchQuery="@ViewBag.SearchQuery"
+                               asp-route-orderBy="Asc">
+
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                        </span>
+                        <span>
+                            <a class="btn btn-light"
+                               asp-controller="AdminTags"
+                               asp-action="Index"
+                               asp-route-sortBy="DisplayName"
+                               asp-route-searchQuery="@ViewBag.SearchQuery"
+                               asp-route-orderBy="Desc">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
+                    </span>
+                </th>
+
                 <th></th>
             </tr>
         </thead>

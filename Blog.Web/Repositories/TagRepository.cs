@@ -31,13 +31,20 @@ public class TagRepository : ITagRepository
         return null;
     }
 
-    public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? searchQuery)
+    public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? searchQuery, string? orderBy = null, string? sortBy = null)
     {
         //return await _dbContext.Tags.ToListAsync();
         var query = _dbContext.Tags.AsQueryable();
+        //here we can add more filters
         if (!string.IsNullOrEmpty(searchQuery))
         {
             query = query.Where(tmp => tmp.Name.Contains(searchQuery) || tmp.DisplayName.Contains(searchQuery));
+        }
+        //here we can add more sortings
+        if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(orderBy))
+        {
+            var isDesc = string.Equals(orderBy, "Desc", StringComparison.OrdinalIgnoreCase);
+            query = isDesc ? query.OrderByDescending(tmp => tmp.Name) : query.OrderBy(tmp => tmp.Name);
         }
         return await query.ToListAsync();
     }
