@@ -2,7 +2,8 @@
 # ✨ ASP.NET Core Blog Platform
 
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-6.0+-512BD4?logo=dotnet)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.2-Lux_Theme-7952B3)
+
+
 ![EF Core](https://img.shields.io/badge/Entity_Framework-7.0-512BD4)
 
 A feature-rich blog platform built with modern web technologies, offering a premium content management experience with the elegant Bootstrap Lux theme.
