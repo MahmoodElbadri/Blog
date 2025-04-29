@@ -31,9 +31,15 @@ public class TagRepository : ITagRepository
         return null;
     }
 
-    public async Task<IEnumerable<Tag>> GetAllTagsAsync()
+    public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? searchQuery)
     {
-        return await _dbContext.Tags.ToListAsync();
+        //return await _dbContext.Tags.ToListAsync();
+        var query = _dbContext.Tags.AsQueryable();
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            query = query.Where(tmp => tmp.Name.Contains(searchQuery) || tmp.DisplayName.Contains(searchQuery));
+        }
+        return await query.ToListAsync();
     }
 
     public async Task<Tag?> GetByIdAsync(Guid id)

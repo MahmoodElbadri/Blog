@@ -41,9 +41,9 @@ public class AdminTagsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? searchQuery)
     {
-        var tags = await _tagRepository.GetAllTagsAsync();
+        var tags = await _tagRepository.GetAllTagsAsync(searchQuery);
         return View(tags);
     }
 

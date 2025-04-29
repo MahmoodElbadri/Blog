@@ -10,6 +10,17 @@
     </div>
 </div>
 
+<form method="get">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-6">
+                <input type="text" class="form-control" name="searchQuery" placeholder="Search" />
+                <button class="btn btn-primary mt-4" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 @if (Model is not null && Model.Any())
 {
     <table class="table table-hover">
@@ -31,8 +42,8 @@
                     <td>@tag.DisplayName</td>
                     <td>
                         <div class=" btn-group flex-row">
-                        <a asp-action="Edit" asp-route-id="@tag.ID" class="btn btn-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@tag.ID" class=" btn btn-danger">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@tag.ID" class="btn btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@tag.ID" class=" btn btn-danger">Delete</a>
                         </div>
                     </td>
                 </tr>

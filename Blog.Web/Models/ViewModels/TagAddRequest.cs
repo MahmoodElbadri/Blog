@@ -1,7 +1,11 @@
-﻿namespace Blog.Web.Models.ViewModels;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blog.Web.Models.ViewModels;
 
 public class TagAddRequest
 {
-    public string Name { get; set; }
-    public string DisplayName { get; set; }
+    [Required]
+    public string? Name { get; set; }
+    [Required]
+    public string? DisplayName { get; set; }
 }
