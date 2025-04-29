@@ -31,7 +31,8 @@ public class TagRepository : ITagRepository
         return null;
     }
 
-    public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? searchQuery, string? orderBy = null, string? sortBy = null)
+    public async Task<IEnumerable<Tag>> GetAllTagsAsync(string? searchQuery, string? orderBy = null, string? sortBy = null,
+        int pageNumber = 1, int pageSize = 100)
     {
         //return await _dbContext.Tags.ToListAsync();
         var query = _dbContext.Tags.AsQueryable();
@@ -46,6 +47,8 @@ public class TagRepository : ITagRepository
             var isDesc = string.Equals(orderBy, "Desc", StringComparison.OrdinalIgnoreCase);
             query = isDesc ? query.OrderByDescending(tmp => tmp.Name) : query.OrderBy(tmp => tmp.Name);
         }
+        var skipResults = (pageNumber - 1) * pageSize;
+        query = query.Skip(skipResults).Take(pageSize);
         return await query.ToListAsync();
     }
 
@@ -54,6 +57,11 @@ public class TagRepository : ITagRepository
         var tag = await _dbContext.Tags.FirstOrDefaultAsync(tmp => tmp.ID == id);
         if (tag == null) { return null; }
         return tag;
+    }
+
+    public async Task<int> GetNumberOfTags()
+    {
+        return await _dbContext.Tags.CountAsync();
     }
 
     public async Task<Tag?> UpdateAsync(Tag tag)

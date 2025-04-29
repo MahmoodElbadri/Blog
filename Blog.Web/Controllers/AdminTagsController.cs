@@ -41,12 +41,29 @@ public class AdminTagsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? searchQuery, string? orderBy, string? sortBy)
+    public async Task<IActionResult> Index(string? searchQuery, string? orderBy, string? sortBy, int pageSize = 3, int pageNumber = 1
+        )
     {
-        var tags = await _tagRepository.GetAllTagsAsync(searchQuery, sortBy: sortBy, orderBy: orderBy);
+        var tags = await _tagRepository.GetAllTagsAsync(searchQuery, sortBy: sortBy,
+            orderBy: orderBy, pageNumber: pageNumber, pageSize: pageSize);
+        var totalRecords = await _tagRepository.GetNumberOfTags();
+        var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+        if (pageNumber > totalPages)
+        {
+            pageNumber = totalPages;
+        }
+        if (pageNumber < 1)
+        {
+            pageNumber = 1;
+        }
+
+        ViewBag.TotalPages = totalPages;
         ViewBag.SearchQuery = searchQuery;
         ViewBag.OrderBy = orderBy;
         ViewBag.SortBy = sortBy;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+        ViewBag.CurrentPage = pageNumber;
         return View(tags);
     }
 
