@@ -1,7 +1,5 @@
 ﻿using Blog.Web.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 
 namespace Blog.Web.Controllers;
 
