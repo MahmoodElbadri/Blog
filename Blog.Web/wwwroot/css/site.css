@@ -13,6 +13,14 @@
  */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700&display=swap");
 
+.navbar-brand img {
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
 :root,
 [data-bs-theme=light] {
     --bs-blue: #007bff;
